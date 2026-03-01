@@ -18,7 +18,7 @@ function App() {
   const startGame = useCallback(async (settings) => {
     const { playerCount, impostorCount, mrWhiteCount, showRoles } = settings
 
-    const res = await fetch('/imposteur_5000.json')
+    const res = await fetch(`${import.meta.env.BASE_URL}imposteur_5000.json`)
     const data = await res.json()
     const pair = data[Math.floor(Math.random() * data.length)]
     const detectiveWord = pair[0]
@@ -55,7 +55,7 @@ function App() {
     const prev = gameState
     if (!prev) return
 
-    const res = await fetch('/imposteur_5000.json')
+    const res = await fetch(`${import.meta.env.BASE_URL}imposteur_5000.json`)
     const data = await res.json()
     const pair = data[Math.floor(Math.random() * data.length)]
     const detectiveWord = pair[0]
