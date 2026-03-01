@@ -213,6 +213,7 @@
   padding: 2rem;
   user-select: none;
   -webkit-user-select: none;
+  touch-action: none;
   cursor: pointer;
   transition: box-shadow 0.3s, border-color 0.3s;
   border: 2px solid transparent;
