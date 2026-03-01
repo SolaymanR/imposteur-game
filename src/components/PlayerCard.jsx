@@ -1,14 +1,17 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 
 function PlayerCard({ player, showRoles, onReveal }) {
   const [revealed, setRevealed] = useState(false)
+  const cardRef = useRef(null)
 
-  const handlePointerDown = useCallback(() => {
+  const handlePointerDown = useCallback((e) => {
+    e.target.setPointerCapture(e.pointerId)
     setRevealed(true)
     onReveal()
   }, [onReveal])
 
-  const handlePointerUp = useCallback(() => {
+  const handlePointerUp = useCallback((e) => {
+    if (cardRef.current) cardRef.current.releasePointerCapture(e.pointerId)
     setRevealed(false)
   }, [])
 
@@ -23,10 +26,11 @@ function PlayerCard({ player, showRoles, onReveal }) {
 
   return (
     <div
+      ref={cardRef}
       className={`player-card${revealed ? ` revealed ${player.role}` : ''}`}
       onPointerDown={handlePointerDown}
       onPointerUp={handlePointerUp}
-      onPointerLeave={handlePointerUp}
+      onLostPointerCapture={() => setRevealed(false)}
       onContextMenu={(e) => e.preventDefault()}
     >
       {revealed ? (
